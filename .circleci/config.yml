@@ -11,7 +11,7 @@ jobs:
           command: |
             echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
-            pip install --user -r requirements.txt
+            pip install --user -r requirments.txt
       - run:
           name: Run Unit Tests
           command: pytest --junitxml=test-reports/junit.xml --html=test-reports/pytest_report.html --self-contained-html
