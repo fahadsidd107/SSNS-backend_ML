@@ -1,43 +1,26 @@
-# Couldn't automatically generate a config from your source code.
-# This is a generic template to serve as a base for your custom config
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
+
 jobs:
-  test:
+  run_tests:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/python:3.7.4
     steps:
       - checkout
-      # Replace this with a real test runner invocation
       - run:
-          name: Run tests
-          command: echo 'replace me with real tests!' && false
-  build:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      # Replace this with steps to build a package, or executable
+          name: Install Python Dependencies
+          command: |
+            echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
+            pip install --user -r requirements.txt
       - run:
-          name: Build an artifact
-          command: touch example.txt
+          name: Run Unit Tests
+          command: pytest --junitxml=test-reports/junit.xml --html=test-reports/pytest_report.html --self-contained-html
+      - store_test_results:
+          path: test-reports
       - store_artifacts:
-          path: example.txt
-  deploy:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          path: test-reports
+
 workflows:
-  example:
+  build_test:
     jobs:
-      - test
-      - build:
-          requires:
-            - test
-      - deploy:
-          requires:
-            - test
+      - run_tests

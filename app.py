@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from pymongo import MongoClient
-import pandas as pd
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -45,7 +44,14 @@ def get_latest_data():
                 'date': latest_document.get('date'),
             }
         else:
-            latest_data = {}
+            latest_data = {
+                'temperature': 0.0,
+                'perticulate_matter': 0.0,
+                'pressure': 0.0,
+                'humidity': 0.0,
+                'time': datetime.now().strftime('%H:%M:%S'),
+                'date': datetime.now().strftime('%Y-%m-%d'),
+            }
 
         # Generate predictions for 15 mins, 30 mins, and 1 hour
         predictions = {
