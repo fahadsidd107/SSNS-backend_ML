@@ -10,6 +10,11 @@ class BasicTests(unittest.TestCase):
     def test_get_latest_data(self):
         response = self.app.get('/api/latest')
         self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertIn('15 mins', data)
+        self.assertIn('30 mins', data)
+        self.assertIn('1 hour', data)
+        self.assertIn('accuracy', data)
 
 if __name__ == "__main__":
     unittest.main()
