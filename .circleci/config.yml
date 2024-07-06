@@ -16,7 +16,7 @@ jobs:
           command: |
             echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
-            pip install --user -r requirements.txt
+            pip install --user -r requirments.txt
       - run:
           name: Start Flask Application
           command: |
