@@ -78,12 +78,12 @@ def calculate_accuracy(df):
     accuracy = 100 - (np.sqrt(mse) / np.mean(test)) * 100
     return f"{accuracy:.2f}%"
 
-@app.route('/data', methods=['GET'])
+# @app.route('/data', methods=['GET'])
 
-def get_data():
-    df = preprocess_data()
-    data = df.reset_index().to_dict(orient='records')
-    return jsonify(data)
+# def get_data():
+#     df = preprocess_data()
+#     data = df.reset_index().to_dict(orient='records')
+#     return jsonify(data)
 
 @app.route('/predictions', methods=['GET'])
 def get_predictions_route():
