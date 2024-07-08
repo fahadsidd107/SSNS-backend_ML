@@ -6,7 +6,7 @@ Gunicorn
 click
 Flask-SQLAlchemy
 greenlet
-itsdangerou
+itsdangerous
 Jinja2
 MarkupSafe
 psycopg2-binary
