@@ -2,8 +2,6 @@ from flask import Flask, jsonify
 from pymongo import MongoClient
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA
-from sklearn.metrics import mean_squared_error
-import numpy as np
 from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
@@ -45,9 +43,9 @@ def get_predictions(df, last_timestamp):
     model_fit = fit_arima_model(df)
     
     intervals = {
-        "15 mins": 15,
-        "30 mins": 30,
-        "1 hour": 60
+        "15 mins": 20,
+        "30 mins": 40,
+        "1 hour": 80
     }
     
     predictions = {}
@@ -68,18 +66,7 @@ def get_predictions(df, last_timestamp):
     
     return predictions
 
-def calculate_accuracy(df):
-    train_size = int(len(df) * 0.8)
-    train, test = df['temperature'].iloc[:train_size], df['temperature'].iloc[train_size:]
-    model = ARIMA(train, order=(5, 1, 0))
-    model_fit = model.fit()
-    predictions = model_fit.forecast(steps=len(test))
-    mse = mean_squared_error(test, predictions)
-    accuracy = 100 - (np.sqrt(mse) / np.mean(test)) * 100
-    return f"{accuracy:.2f}%"
-
 @app.route('/data', methods=['GET'])
-
 def get_data():
     df = preprocess_data()
     data = df.reset_index().to_dict(orient='records')
@@ -90,8 +77,6 @@ def get_predictions_route():
     df = preprocess_data()
     last_timestamp = df.index[-1]  # Get the last timestamp from the DataFrame
     predictions = get_predictions(df, last_timestamp)
-    accuracy = calculate_accuracy(df)
-    predictions["accuracy"] = accuracy
     
     # Check if there is data within the last minute
     current_time_utc = datetime.now(timezone.utc)
