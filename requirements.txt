@@ -7,5 +7,3 @@ greenlet
 itsdangerous
 Jinja2
 Werkzeug
-Scikit-learn
-numpy
