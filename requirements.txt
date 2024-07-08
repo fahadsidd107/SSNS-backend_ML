@@ -3,13 +3,9 @@ pymongo
 pandas
 statsmodels
 Gunicorn
-click
-Flask-SQLAlchemy
 greenlet
 itsdangerous
 Jinja2
-MarkupSafe
-psycopg2-binary
 Werkzeug
 Scikit-learn
 numpy
